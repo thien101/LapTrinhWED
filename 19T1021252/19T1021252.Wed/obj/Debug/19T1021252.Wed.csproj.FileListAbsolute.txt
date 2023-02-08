@@ -76,3 +76,4 @@ D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.csproj.CoreCom
 D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.csproj.CopyComplete
 D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.dll
 D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.csproj.AssemblyReference.cache

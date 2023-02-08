@@ -3,4 +3,78 @@
     ViewBag.Title = "Quản lý khách hàng";
 }
 
+<div class="box box-primary">
+    <div class="box-body">
+        @*Form de tim kiem*@
+        <form>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="searchValue" autofocus>
+                <div class="input-group-btn">
+                    <button class="btn btn-info" type="submit">
+                        <i class="glyphicon glyphicon-search"></i> Tim kiem
+                    </button>
+                    <a href="~/Customer/Create" class="btn btn-primary" style="margin-left: 4px">
+                        <i class="fa fa-plus"></i>  Bo sung
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        @*Ket qua tiem kiem*@
+        <p style="margin-top: 10px; margin-bottom: 10px;">
+            có <strong>1,657</strong> khách hàng trong <strong>100</strong> trang
+        </p>
+
+        @*bảng kết quả tìm kiếm*@
+        <div>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="bg-primary">
+                        <th>Tên khách hàng</th>
+                        <th>Tên liên lạc</th>
+                        <th>Địa chỉ</th>
+                        <th>Thành phố</th>
+                        <th>Mã bưu điện</th>
+                        <th>Quốc gia</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Obere Str. 57</td>
+                            <td>Franfurk</td>
+                            <td>12209</td>
+                            <td>Germany</td>
+                            <td>NULL</td>
+
+                            <td class="text-right">
+                                <a href="~/Customer/Edit" class="btn btn-xs btn-primary">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="~/Customer/Delete" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <ul class="pagination">
+                <li><a class="active" href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li class="disabled"><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 

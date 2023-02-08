@@ -16,5 +16,34 @@ namespace _19T1021252.Wed.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Create()
+        {
+            ViewBag.Title = "Bổ sung nhà cung cấp";
+            return View("Edit");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Edit()
+        {
+            ViewBag.Title = "Cập nhập nhà cung cấp";
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Delete()
+        {
+            return View();
+        }
     }
 }
