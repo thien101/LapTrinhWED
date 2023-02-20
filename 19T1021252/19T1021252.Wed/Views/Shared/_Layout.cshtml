@@ -73,8 +73,11 @@
     <script src="~/Themes/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/Themes/dist/js/demo.js"></script>
-    <script>$(document).ready(function () {
-    $('.sidebar-menu').tree()
-  })</script>
+    <script>
+    $(document).ready(function () {
+            $('.sidebar-menu').tree()
+        })</script>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

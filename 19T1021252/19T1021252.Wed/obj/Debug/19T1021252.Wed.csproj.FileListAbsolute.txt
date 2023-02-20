@@ -77,3 +77,9 @@ D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.csproj.CopyCom
 D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.dll
 D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.pdb
 D:\LaptrinhWed\19T1021252\19T1021252.Wed\obj\Debug\19T1021252.Wed.csproj.AssemblyReference.cache
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\bin\19T1021252.BusinessLayers.dll
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\bin\19T1021252.DataLayers.dll
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\bin\19T1021252.DomainModels.dll
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\bin\19T1021252.BusinessLayers.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\bin\19T1021252.DataLayers.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.Wed\bin\19T1021252.DomainModels.pdb

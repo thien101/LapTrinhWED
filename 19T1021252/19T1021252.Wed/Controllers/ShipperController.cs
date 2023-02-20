@@ -3,19 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using _19T1021252.BusinessLayers;
+using _19T1021252.DataLayers;
+
 
 namespace _19T1021252.Wed.Controllers
 {
     public class ShipperController : Controller
     {
+        private const int PAGE_SIZE = 5;
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, string searchValue = "")
         {
-            return View();
+            int rowCount = 0;
+            var data = CommonDataService.ListOfShippers(page, PAGE_SIZE, searchValue, out rowCount);
+
+            int pageCount = (int)Math.Round((double)rowCount / PAGE_SIZE);
+
+            ViewBag.Page = page;
+            ViewBag.RowCount = rowCount;
+            ViewBag.PageCount = pageCount;
+            ViewBag.SearchValue = searchValue;
+            return View(data);
         }
+
 
         /// <summary>
         /// 

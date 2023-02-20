@@ -4,3 +4,8 @@ D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\obj\Debug\19T1021252.Busines
 D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\obj\Debug\19T1021252.BusinessLayers.csproj.CoreCompileInputs.cache
 D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\obj\Debug\19T1021252.BusinessLayers.dll
 D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\obj\Debug\19T1021252.BusinessLayers.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\bin\Debug\19T1021252.DataLayers.dll
+D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\bin\Debug\19T1021252.DomainModels.dll
+D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\bin\Debug\19T1021252.DataLayers.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\bin\Debug\19T1021252.DomainModels.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.BusinessLayers\obj\Debug\19T1021252.BusinessLayers.csproj.CopyComplete

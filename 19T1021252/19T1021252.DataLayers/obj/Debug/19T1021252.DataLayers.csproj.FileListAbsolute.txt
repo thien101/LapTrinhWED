@@ -4,3 +4,6 @@ D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\obj\Debug\19T1021252.DataLayers.
 D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\obj\Debug\19T1021252.DataLayers.csproj.CoreCompileInputs.cache
 D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\obj\Debug\19T1021252.DataLayers.dll
 D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\obj\Debug\19T1021252.DataLayers.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\bin\Debug\19T1021252.DomainModels.dll
+D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\bin\Debug\19T1021252.DomainModels.pdb
+D:\LaptrinhWed\19T1021252\19T1021252.DataLayers\obj\Debug\19T1021252.DataLayers.csproj.CopyComplete

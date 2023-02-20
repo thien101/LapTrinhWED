@@ -129,9 +129,13 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ShipperController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaginationSearchInput.cs" />
+    <Compile Include="Models\PaginationSearchOutput.cs" />
+    <Compile Include="Models\SupplierSearchOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -6511,10 +6515,11 @@
     <Content Include="Views\Shipper\Delete.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Delete.cshtml" />
+    <Content Include="Views\Supplier\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -6528,6 +6533,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\19T1021252.BusinessLayers\19T1021252.BusinessLayers.csproj">
+      <Project>{868f8a64-8c06-4930-b519-e44ecb40ec1d}</Project>
+      <Name>19T1021252.BusinessLayers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\19T1021252.DataLayers\19T1021252.DataLayers.csproj">
+      <Project>{1a19b7be-bbe0-4225-80dc-bf61a3e5c417}</Project>
+      <Name>19T1021252.DataLayers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\19T1021252.DomainModels\19T1021252.DomainModels.csproj">
+      <Project>{2f807be7-6daa-4b55-8306-c486d5d04e73}</Project>
+      <Name>19T1021252.DomainModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
