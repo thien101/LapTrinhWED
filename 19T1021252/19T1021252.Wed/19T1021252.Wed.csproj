@@ -120,6 +120,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Codes\Converter.cs" />
+    <Compile Include="Codes\SelectListHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -133,8 +135,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategorySearchOutput.cs" />
+    <Compile Include="Models\EmployeeSearchOutput.cs" />
+    <Compile Include="Models\CustomerSearchOutput.cs" />
     <Compile Include="Models\PaginationSearchInput.cs" />
     <Compile Include="Models\PaginationSearchOutput.cs" />
+    <Compile Include="Models\ShipperSearchOutput.cs" />
     <Compile Include="Models\SupplierSearchOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -6516,6 +6522,10 @@
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Delete.cshtml" />
     <Content Include="Views\Supplier\Search.cshtml" />
+    <Content Include="Views\Category\Search.cshtml" />
+    <Content Include="Views\Customer\Search.cshtml" />
+    <Content Include="Views\Employee\Search.cshtml" />
+    <Content Include="Views\Shipper\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

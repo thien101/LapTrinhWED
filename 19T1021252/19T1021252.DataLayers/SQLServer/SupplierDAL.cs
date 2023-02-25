@@ -188,7 +188,7 @@ namespace _19T1021252.DataLayers.SQLServer
                 cmd.CommandText = @"SELECT *
                                     FROM 
                                     (
-	                                    SELECT	*, ROW_NUMBER() OVER (ORDER BY SupplierName) AS RowNumber
+	                                    SELECT	*, ROW_NUMBER() OVER (ORDER BY SupplierID DESC) AS RowNumber
 	                                    FROM	Suppliers 
 	                                    WHERE	(@SearchValue = N'')
 		                                    OR	(

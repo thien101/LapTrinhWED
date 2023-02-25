@@ -1,58 +1,71 @@
 ﻿
+@model _19T1021252.DomainModels.Employee
 @{
-
+    //string t = (Model.BirthDate.ToString("yyyy-MM-dd") != "0001-01-01") ? Model.BirthDate.ToString("yyyy-MM-dd") : "";
 }
 
 <div class="box box-primary">
     <div class="box-body">
 
-        <form class="form-horizontal" action="~/Employee">
+        <form class="form-horizontal" action="~/Employee/Save" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="EmployeeID" value="@Model.EmployeeID" />
+
             <div class="form-group">
                 <label class="control-label col-sm-2">Họ:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" autofocus>
+                    <input type="text" class="form-control" autofocus name="FirstName" value="@Model.FirstName">
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @style="color:#f00"})
                 </div>
             </div>
+
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Tên nhân viên:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" value="@Model.LastName" name="LastName">
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @style = "color:#f00" })
+
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Ngày sinh:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    @Html.HiddenFor(m => m.BirthDate)
+                    <input type="text" class="form-control" value="@string.Format("{0:dd/MM/yyyy}")" name="birthdate">
+                    @Html.ValidationMessageFor(m => m.BirthDate, "", new { @style = "color:#f00" })
+
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Mô tả:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" value="@Model.Notes" name="Notes">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Email:</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control">
+                    <input type="text" class="form-control" value="@Model.Email" name="Email">
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:#f00" })
+
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">File Image:</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control">
+                    <input type="file" class="form-control" name="Photo" value="@Model.Photo">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2"></label>
                 <div class="col-sm-10">
-                    <img src="~/Themes/dist/img/user2-160x160.jpg" class="" alt="" width="304" height="236">
+                    <img src="@Model.Photo" class="" alt="" width="304" height="236">
                 </div>
             </div>
 

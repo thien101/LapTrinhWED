@@ -80,27 +80,93 @@ namespace _19T1021252.Wed.Controllers
         /// <returns></returns>
         public ActionResult Create()
         {
+            var data = new Supplier()
+            {
+                SupplierId = 0
+            };
             ViewBag.Title = "Bổ sung nhà cung cấp";
-            return View("Edit");
-        }
+            return View("Edit", data);
+        }   
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Edit()
+        public ActionResult Edit(int id = 0)
         {
+            if (id <= 0)
+                return RedirectToAction("Index");
+
+            var data = CommonDataService.GetSupplier(id);
+            if (data == null)
+                return RedirectToAction("Index");
+
             ViewBag.Title = "Cập nhập nhà cung cấp";
-            return View();
+            return View(data);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// 
+        [ValidateAntiForgeryToken] //Xac dinh nguon data co tu form cua minh hay tu ngoai vao
+        [HttpPost]
+        public ActionResult Save(Supplier data)
+        {
+
+            //Kiểm soat dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(data.SupplierName))
+                ModelState.AddModelError(nameof(data.SupplierName), "Tên không được để rỗng");
+            if (string.IsNullOrWhiteSpace(data.ContactName))
+                ModelState.AddModelError(nameof(data.ContactName), "Tên giao dịch không được để trống");
+            if (string.IsNullOrWhiteSpace(data.Country))
+                ModelState.AddModelError(nameof(data.Country), "Vui lòng chọn quốc gia");
+
+            data.Address = data.Address ?? "";
+            data.Phone = data.Address ?? "";
+            data.City = data.City ?? "";
+            data.PostalCode = data.PostalCode ?? "";
+
+            
+            if(ModelState.IsValid == false)
+            {
+                ViewBag.Title = data.SupplierId == 0 ? "Bổ sung nhà cung cấp" : "Cập nhập nhà cung cấp";
+                return View("Edit", data);
+            }
+
+            if(data.SupplierId == 0)
+            {
+                CommonDataService.AddSupplier(data);
+            }
+            else
+            {
+                CommonDataService.UpdateSupplier(data);
+            }
+            return RedirectToAction("Index");
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Delete()
+        public ActionResult Delete(int id = 0)
         {
-            return View();
+            if (id <= 0)
+                return RedirectToAction("Index");
+
+            if(Request.HttpMethod == "POST")
+            {
+                CommonDataService.DeleteSupplier(id);
+                return RedirectToAction("Index");
+            }
+
+            var data = CommonDataService.GetSupplier(id);
+            if (data == null)
+                return RedirectToAction("Index");
+            
+            return View(data);
         }
     }
 }

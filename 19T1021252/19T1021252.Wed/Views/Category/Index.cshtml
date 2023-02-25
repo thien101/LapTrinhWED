@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<_19T1021252.DomainModels.Category>
+@model _19T1021252.Wed.Models.PaginationSearchInput
 @{
     ViewBag.Title = "Quản lý loại hàng";
 }
@@ -7,9 +7,10 @@
 <div class="box box-primary">
     <div class="box-body">
         @*Form de tim kiem*@
-        <form action="~/Category">
+        <form id="formSearch" action="~/Category/Search">
+            <input type="hidden" name="PageSize" value="@Model.PageSize" />
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="searchValue" autofocus>
+                <input type="text" class="form-control" placeholder="Search" name="searchValue" autofocus value="@Model.SearchValue">
                 <div class="input-group-btn">
                     <button class="btn btn-info" type="submit">
                         <i class="glyphicon glyphicon-search"></i> Tim kiem
@@ -21,55 +22,39 @@
             </div>
         </form>
 
-        @*Ket qua tiem kiem*@
-        <p style="margin-top: 10px; margin-bottom: 10px;">
-            có <strong>@ViewBag.RowCount</strong> loại hàng trong <strong>@ViewBag.PageCount</strong> trang
-        </p>
-        <div>
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr class="bg-primary">
-                        <th>Tên loại hàng</th>
-                        <th>Miêu tả </th>
-                        <th></th>
-                    </tr>
-                </thead>
+        <div id="searchResult"></div>
 
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                            <tr>
-                                <td>@item.CategoryName</td>
-                                <td>@item.Description</td>
-                                <td class="text-right">
-                                    <a href="~/Category/Edit" class="btn btn-xs btn-primary">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="~/Category/Delete" class="btn btn-xs btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="text-center">
-            <ul class="pagination">
-                @for (int i = 1; i <= ViewBag.PageCount; i++)
-                {
-                    if (i == ViewBag.Page)
-                    {
-                        <li><a class="active" href="#">@i</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="~/Category?page=@i&searchValue=@ViewBag.SearchValue">@i</a></li>
-                    }
-
-                }
-            </ul>
-        </div>
     </div>
 </div>
 
+@section scripts {
+<script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                doSearch(1);
+                return;
+            });
+            doSearch(@Model.Page);
+        })
+        function doSearch(page) {
+            var url = $("#formSearch").prop("action");
+            var postData = $("#formSearch").serializeArray();
+            postData.push({ "name": "page", "value": page });
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: postData,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    $("#searchResult").html(data);
+                }
+            });
+
+            return;
+        }
+</script>
+}
