@@ -15,8 +15,10 @@
         {
             <div class="box box-primary" style="width:382px;border: 1px solid rgba(0, 0, 0, 0.08);margin: 0 4px; margin-bottom: 12px;">
                 <div class="box-body box-profile" style="position:relative;">
-
-                    <img class="profile-user-img img-responsive img-circle" src="~/@item.Photo" alt="User profile picture">
+                    @{ 
+                        string str = (item.Photo.Contains("http") ? "" : "/");
+                    }
+                    <img class="profile-user-img img-responsive img-circle" src="@item.Photo"  alt="User profile picture">
                     <div class="action-profile" style="position:absolute; top: 6px; right:20px;">
                         <a href="~/Employee/Edit/@item.EmployeeID" class="btn btn-xs btn-primary">
                             <i class="fa fa-edit">
