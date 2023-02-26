@@ -108,10 +108,10 @@ namespace _19T1021252.Wed.Controllers
         /// <returns></returns>
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Save(Employee data, string birthdate, HttpPostedFileBase uploadPhoto)
+        public ActionResult Save(Employee data, string birthday, HttpPostedFileBase uploadPhoto)
         {
             //Kiểm soát dữ liệu đầu vào
-            DateTime? d = Converter.DMYStringtoDateTime(birthdate);
+            DateTime? d = Converter.DMYStringtoDateTime(birthday);
             if (d == null)
                 ModelState.AddModelError("BirthDate", "Phải nhập ngày sinh");
             else
@@ -125,12 +125,20 @@ namespace _19T1021252.Wed.Controllers
                 ModelState.AddModelError(nameof(data.Email), "Email không được trống");
 
             data.Notes = data.Notes ?? "";
-            data.Photo = data.Photo ?? "~/Themes/dist/img/user2-160x160.jpg";
 
             if(ModelState.IsValid == false)
             {
                 ViewBag.Title = data.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhập nhân viên";
                 return View("Edit",data);
+            }
+
+            if(uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
+                string path = Server.MapPath("~/Images/Employees");
+                string filePath = System.IO.Path.Combine(path, fileName);
+                uploadPhoto.SaveAs(filePath);
+                data.Photo = $"Images/Employees/{fileName}";
             }
 
             if (data.EmployeeID == 0)
