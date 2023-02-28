@@ -6526,6 +6526,7 @@
     <Content Include="Views\Customer\Search.cshtml" />
     <Content Include="Views\Employee\Search.cshtml" />
     <Content Include="Views\Shipper\Search.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

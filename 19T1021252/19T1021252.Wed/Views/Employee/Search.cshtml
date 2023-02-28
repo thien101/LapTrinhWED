@@ -18,7 +18,7 @@
                     @{ 
                         string str = (item.Photo.Contains("http") ? "" : "/");
                     }
-                    <img class="profile-user-img img-responsive img-circle" src="@item.Photo"  alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="@(str+item.Photo)" style="width:120px; height:120px;"  alt="User profile picture">
                     <div class="action-profile" style="position:absolute; top: 6px; right:20px;">
                         <a href="~/Employee/Edit/@item.EmployeeID" class="btn btn-xs btn-primary">
                             <i class="fa fa-edit">
@@ -34,7 +34,7 @@
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Ngày sinh</b> <p class="pull-right">@item.BirthDate</p>
+                            <b>Ngày sinh</b> <p class="pull-right">@item.BirthDate.ToString("dd/MM/yyyy")</p>
                         </li>
                         <li class="list-group-item">
                             <b>Email</b> <p class="pull-right">@item.Email</p>
@@ -57,7 +57,7 @@
         {
             if (i == Model.Page)
             {
-                <li><a class="active" href="#">@i</a></li>
+                <li><a class="bg-aqua-active" href="#">@i</a></li>
             }
             else
             {

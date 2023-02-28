@@ -9,6 +9,8 @@ using _19T1021252.DomainModels;
 
 namespace _19T1021252.Wed.Controllers
 {
+    [Authorize]
+
     public class CategoryController : Controller
     {
         private const int PAGE_SIZE = 5;

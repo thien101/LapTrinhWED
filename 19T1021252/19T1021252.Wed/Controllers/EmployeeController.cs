@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +13,7 @@ namespace _19T1021252.Wed.Controllers
 {
     public class EmployeeController : Controller
     {
-        private const int PAGE_SIZE = 5;
+        private const int PAGE_SIZE = 6;
         private const string EMPLOYEE_SEARCH = "EmployeeCondition";
         /// <summary>
         /// 
@@ -114,7 +115,7 @@ namespace _19T1021252.Wed.Controllers
             //Kiểm soát dữ liệu đầu vào
             DateTime? d = Converter.DMYStringtoDateTime(birthday);
             if (d == null)
-                ModelState.AddModelError("BirthDate", "Phải nhập ngày sinh");
+                ModelState.AddModelError("BirthDate", $"Ngày sinh {birthday} không hợp lệ");
             else
                 data.BirthDate = d.Value;
 
@@ -126,8 +127,9 @@ namespace _19T1021252.Wed.Controllers
                 ModelState.AddModelError(nameof(data.Email), "Email không được trống");
 
             data.Notes = data.Notes ?? "";
+            data.Photo = "Images/Employees/638130049349432277_Avatar-Facebook-trang.jpg";
 
-            if(ModelState.IsValid == false)
+            if (ModelState.IsValid == false)
             {
                 ViewBag.Title = data.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhập nhân viên";
                 return View("Edit",data);

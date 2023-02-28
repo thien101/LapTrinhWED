@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace _19T1021252.Wed.Controllers
 {
+
+    [Authorize]
+
     public class OrderController : Controller
     {
         /// <summary>
