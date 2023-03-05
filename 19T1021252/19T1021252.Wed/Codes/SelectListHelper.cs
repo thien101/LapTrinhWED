@@ -33,5 +33,47 @@ namespace _19T1021252.Wed
 
             return list;
         }
+
+        public static List<SelectListItem> Suppliers()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem()
+            {
+                Value = "0",
+                Text = "-- Loại hàng --",
+            });
+
+            foreach (var item in CommonDataService.ListOfSuppliers())
+            {
+                list.Add(new SelectListItem()
+                {
+                    Value = item.SupplierId.ToString(),
+                    Text = item.SupplierName
+                });
+            }
+
+            return list;
+        }
+
+        public static List<SelectListItem> Categories()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem()
+            {
+                Value = "0",
+                Text = "-- Nhà cung cấp --",
+            });
+
+            foreach (var item in CommonDataService.ListOfCategories())
+            {
+                list.Add(new SelectListItem()
+                {
+                    Value = item.CategoryID.ToString(),
+                    Text = item.CategoryName
+                });
+            }
+
+            return list;
+        }
     }
 }

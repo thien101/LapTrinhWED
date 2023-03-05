@@ -127,7 +127,7 @@ namespace _19T1021252.Wed.Controllers
                 ModelState.AddModelError(nameof(data.Email), "Email không được trống");
 
             data.Notes = data.Notes ?? "";
-            data.Photo = "Images/Employees/638130049349432277_Avatar-Facebook-trang.jpg";
+            //data.Photo = "Images/Employees/638130049349432277_Avatar-Facebook-trang.jpg";
 
             if (ModelState.IsValid == false)
             {

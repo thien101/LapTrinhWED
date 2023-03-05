@@ -165,52 +165,52 @@ namespace _19T1021252.DataLayers.SQLServer
         /// <returns></returns>
         public IList<Employee> List(int page, int pageSize, string searchValue)
         {
-            List<Employee> data = new List<Employee>();
+                List<Employee> data = new List<Employee>();
 
-            if (searchValue != "")
-                searchValue = "%" + searchValue + "%";
+                if (searchValue != "")
+                    searchValue = "%" + searchValue + "%";
 
-            using (SqlConnection cn = OpenConnection())
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"SELECT *
-                                    FROM 
-                                    (
-	                                    SELECT	*, ROW_NUMBER() OVER (ORDER BY FirstName, LastName) AS RowNumber
-	                                    FROM	Employees 
-	                                    WHERE	(@SearchValue = N'')
-	                                        OR	(
-			                                       (FirstName + ' ' + LastName LIKE @SearchValue)
-			                                    OR (Email LIKE @SearchValue)
-		                                        )
-                                    ) AS t
-                                    WHERE (@PageSize = 0) OR (t.RowNumber BETWEEN (@Page - 1) * @PageSize + 1 AND @Page * @PageSize)";
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = cn;
-
-                cmd.Parameters.AddWithValue("@Page", page);
-                cmd.Parameters.AddWithValue("@PageSize", pageSize);
-                cmd.Parameters.AddWithValue("@SearchValue", searchValue);
-
-                var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                while (dbReader.Read())
+                using (SqlConnection cn = OpenConnection())
                 {
-                    data.Add(new Employee()
-                    {
-                        EmployeeID = Convert.ToInt32(dbReader["EmployeeID"]),
-                        LastName = Convert.ToString(dbReader["LastName"]),
-                        FirstName = Convert.ToString(dbReader["FirstName"]),
-                        BirthDate = Convert.ToDateTime(dbReader["BirthDate"]),
-                        Photo = Convert.ToString(dbReader["Photo"]),
-                        Notes = Convert.ToString(dbReader["Notes"]),
-                        Email = Convert.ToString(dbReader["Email"])
-                    });
-                }
-                dbReader.Close();
-                cn.Close();
-            }
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = @"SELECT *
+                                        FROM 
+                                        (
+	                                        SELECT	*, ROW_NUMBER() OVER (ORDER BY FirstName, LastName) AS RowNumber
+	                                        FROM	Employees 
+	                                        WHERE	(@SearchValue = N'')
+	                                            OR	(
+			                                           (FirstName + ' ' + LastName LIKE @SearchValue)
+			                                        OR (Email LIKE @SearchValue)
+		                                            )
+                                        ) AS t
+                                        WHERE (@PageSize = 0) OR (t.RowNumber BETWEEN (@Page - 1) * @PageSize + 1 AND @Page * @PageSize)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = cn;
 
-            return data;
+                    cmd.Parameters.AddWithValue("@Page", page);
+                    cmd.Parameters.AddWithValue("@PageSize", pageSize);
+                    cmd.Parameters.AddWithValue("@SearchValue", searchValue);
+
+                    var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (dbReader.Read())
+                    {
+                        data.Add(new Employee()
+                        {
+                            EmployeeID = Convert.ToInt32(dbReader["EmployeeID"]),
+                            LastName = Convert.ToString(dbReader["LastName"]),
+                            FirstName = Convert.ToString(dbReader["FirstName"]),
+                            BirthDate = Convert.ToDateTime(dbReader["BirthDate"]),
+                            Photo = Convert.ToString(dbReader["Photo"]),
+                            Notes = Convert.ToString(dbReader["Notes"]),
+                            Email = Convert.ToString(dbReader["Email"])
+                        });
+                    }
+                    dbReader.Close();
+                    cn.Close();
+                }
+
+                return data;
         }
         /// <summary>
         /// 
