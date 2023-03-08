@@ -70,7 +70,27 @@ namespace _19T1021252.DataLayers.SQLServer
 
         public long AddPhoto(ProductPhoto data)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"INSERT INTO ProductPhotos(ProductID, Photo,IsHidden, DisplayOrder,Description)
+                                    VALUES (@ProductID,@Photo,@IsHidden, @DisplayOrder, @Description)
+                                    SELECT SCOPE_IDENTITY()
+                                    ";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@ProductID", data.ProductID);
+                cmd.Parameters.AddWithValue("@Photo", data.Photo);
+                cmd.Parameters.AddWithValue("@IsHidden", data.IsHidden);
+                cmd.Parameters.AddWithValue("@DisplayOrder", data.DisplayOrder);
+                cmd.Parameters.AddWithValue("@Description", data.Description);
+
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
+            }
+            return result;
         }
 
         public int Count(string searchValue = "", int categoryID = 0, int supplierID = 0)
@@ -103,31 +123,72 @@ namespace _19T1021252.DataLayers.SQLServer
 
         public bool Delete(int productID)
         {
-            /*bool result = false;
+            bool result = false;
             using (SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"DELETE FROM Employees WHERE EmployeeID = @EmployeeID AND NOT EXISTS(SELECT * FROM Orders WHERE EmployeeID = @EmployeeID)";
+                cmd.CommandText = @"DELETE FROM ProductPhotos WHERE ProductID = @ProductID
+                                    DELETE FROM ProductAttributes WHERE ProductID = @ProductID
+                                    DELETE FROM Products WHERE ProductID = @ProductID";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
-                cmd.Parameters.AddWithValue("@EmployeeID", productID);
+                cmd.Parameters.AddWithValue("@ProductID", productID);
+                result = cmd.ExecuteNonQuery() > 0;
+
+                /*cmd.CommandText = @"DELETE FROM Products WHERE ProductID = @ProductID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@ProductID", productID);
+                result = cmd.ExecuteNonQuery() > 0;
+
+                cmd.CommandText = @"DELETE FROM Products WHERE ProductID = @ProductID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@ProductID", productID);
+                result = cmd.ExecuteNonQuery() > 0;*/
+                cn.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteAttribute(long attributeID)
+        {
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"DELETE
+                                    FROM ProductAttributes
+                                    WHERE AttributeID = @AttributeID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@AttributeID", attributeID);
 
                 result = cmd.ExecuteNonQuery() > 0;
 
                 cn.Close();
             }
-            return result;*/
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteAttribute(long attributeID)
-        {
-            throw new NotImplementedException();
+            return result;
         }
 
         public bool DeletePhoto(long photoID)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"DELETE
+                                    FROM ProductPhotos
+                                    WHERE PhotoID = @photoID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@photoID", photoID);
+
+                result = cmd.ExecuteNonQuery() > 0;
+
+                cn.Close();
+            }
+            return result;
         }
 
         public Product Get(int productID)
@@ -161,13 +222,62 @@ namespace _19T1021252.DataLayers.SQLServer
 
         public ProductAttribute GetAttribute(long attributeID)
         {
-            throw new NotImplementedException();
+            ProductAttribute data = null;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"SELECT * FROM ProductAttributes WHERE AttributeID = @AttributeID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@AttributeID", attributeID);
+                var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (dbReader.Read())
+                {
+                    data = new ProductAttribute()
+                    {
+                        AttributeID = Convert.ToInt32(dbReader["AttributeID"]),
+                        AttributeName = Convert.ToString(dbReader["AttributeName"]),
+                        AttributeValue = Convert.ToString(dbReader["AttributeValue"]),
+                        DisplayOrder = Convert.ToInt32(dbReader["DisplayOrder"]),
+                        ProductID = Convert.ToInt32(dbReader["ProductID"]),
+
+                    };
+                }
+                cn.Close();
+            }
+            return data;
         }
 
         public ProductPhoto GetPhoto(long photoID)
         {
-            throw new NotImplementedException();
+            ProductPhoto data = null;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"SELECT * FROM ProductPhotos WHERE PhotoID = @photoID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@photoID", photoID);
+                var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (dbReader.Read())
+                {
+                    data = new ProductPhoto()
+                    {
+                        PhotoID = Convert.ToInt32(dbReader["PhotoID"]),
+                        Photo = Convert.ToString(dbReader["Photo"]),
+                        Description = Convert.ToString(dbReader["Description"]),
+                        DisplayOrder = Convert.ToInt32(dbReader["DisplayOrder"]),
+                        IsHidden = Convert.ToBoolean(dbReader["IsHidden"]),
+                        ProductID = Convert.ToInt32(dbReader["ProductID"]),
+
+                    };
+                }
+                cn.Close();
+            }
+            return data;
         }
+
+    
 
         public bool InUsed(int productID)
         {
@@ -335,12 +445,51 @@ namespace _19T1021252.DataLayers.SQLServer
 
         public bool UpdateAttribute(ProductAttribute data)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"UPDATE ProductAttributes
+                                    SET AttributeName = @AttributeName, AttributeValue = @AttributeValue, DisplayOrder = @DisplayOrder, ProductID = @ProductID
+                                    WHERE AttributeID = @AttributeID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@AttributeName", data.AttributeName);
+                cmd.Parameters.AddWithValue("@AttributeValue", data.AttributeValue);
+                cmd.Parameters.AddWithValue("@DisplayOrder", data.DisplayOrder);
+                cmd.Parameters.AddWithValue("@ProductID", data.ProductID);
+                cmd.Parameters.AddWithValue("@AttributeID", data.AttributeID);
+
+                result = cmd.ExecuteNonQuery() > 0;
+
+                cn.Close();
+            }
+            return result;
         }
 
         public bool UpdatePhoto(ProductPhoto data)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"UPDATE ProductPhotos
+                                    SET Photo = @Photo, IsHidden = @IsHidden, DisplayOrder = @DisplayOrder, Description = @Description
+                                    WHERE PhotoID = @PhotoID AND ProductID = @ProductID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@ProductID", data.ProductID);
+                cmd.Parameters.AddWithValue("@PhotoID", data.PhotoID);
+                cmd.Parameters.AddWithValue("@Photo", data.Photo);
+                cmd.Parameters.AddWithValue("@IsHidden", data.IsHidden);
+                cmd.Parameters.AddWithValue("@DisplayOrder", data.DisplayOrder);
+                cmd.Parameters.AddWithValue("@Description", data.Description);
+
+                result = cmd.ExecuteNonQuery() > 0;
+
+                cn.Close();
+            }
+            return result;
         }
     }
 }

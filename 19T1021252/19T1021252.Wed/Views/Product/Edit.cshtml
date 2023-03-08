@@ -113,34 +113,14 @@
                 </tr>
             </thead>
             <tbody>
-                @*@for (int i = 1; i <= 3; i++)
-                {
-                    <tr>
-                        <td style="vertical-align:middle">
-                            <img src="~/Images/Products/Samsung_1.jpg" alt="" style="width:100px" />
-                        </td>
-                        <td style="vertical-align:middle;">
-                            LAPTOP SAMSUNG SERIES 9 NP900X4C i5 3337U 8GB SSD 128GB
-                        </td>
-                        <td style="vertical-align:middle;">@i</td>
-                        <td style="vertical-align:middle;"></td>
-                        <td style="vertical-align:middle; text-align:right">
-                            <a class="btn btn-xs btn-primary" href="~/product/photo/edit/111/222">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                            <a class="btn btn-xs btn-danger" href="~/product/photo/delete/111/222" onclick="return confirm('Xóa ảnh của mặt hàng hay không?')">
-                                <i class="fa fa-trash-o"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }*@
 
                 @foreach (var item in Model.ListOfPhoto)
                 {
                     string img = (item.IsHidden) ? "" : item.Photo;
                     <tr>
+
                         <td style="vertical-align:middle">
-                            <img src="@img" alt="" style="width:100px" />
+                            <img src="~/@img" alt="" style="width:100px" />
                         </td>
                         <td style="vertical-align:middle;">
                             @item.Description
@@ -148,10 +128,10 @@
                         <td style="vertical-align:middle;">@item.DisplayOrder</td>
                         <td style="vertical-align:middle;">@((item.IsHidden) ? "Yes" : "No")</td>
                         <td style="vertical-align:middle; text-align:right">
-                            <a class="btn btn-xs btn-primary" href="~/product/photo/edit/111/222">
+                            <a class="btn btn-xs btn-primary" href="~/product/photo/edit/@Model.ProductID/@item.PhotoID">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a class="btn btn-xs btn-danger" href="~/product/photo/delete/111/222" onclick="return confirm('Xóa ảnh của mặt hàng hay không?')">
+                            <a class="btn btn-xs btn-danger" href="~/product/photo/delete/@Model.ProductID/@item.PhotoID" onclick="return confirm('Xóa ảnh của mặt hàng hay không?')">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </td>
@@ -183,30 +163,13 @@
                     <th>Giá trị thuộc tính</th>
                     <th>Thứ tự hiển thị</th>
                     <th class="text-right">
-                        <a class="btn btn-xs btn-primary" href="~/product/attribute/add/111">
+                        <a class="btn btn-xs btn-primary" href="~/product/attribute/add/@Model.ProductID">
                             <i class="fa fa-plus"></i>
                         </a>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @*@for (int i = 1; i <= 5; i++)
-        {
-            <tr>
-                <td style="vertical-align:middle">CPU</td>
-                <td style="vertical-align:middle;">Intel Core i5 3337U 1.8GHz</td>
-                <td style="vertical-align:middle;">1</td>
-                <td style="vertical-align:middle; text-align:right">
-                    <a class="btn btn-xs btn-primary" href="~/product/attribute/edit/111/222">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a class="btn btn-xs btn-danger" href="~/product/attribute/delete/111/222" onclick="return confirm('Xóa thuộc tính này của mặt hàng?')">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                </td>
-            </tr>
-        }*@
-
                 @foreach (var item in Model.ListOfAttributes)
                 {
                     <tr>
@@ -214,10 +177,10 @@
                         <td style="vertical-align:middle;">@item.AttributeValue</td>
                         <td style="vertical-align:middle;">@item.DisplayOrder</td>
                         <td style="vertical-align:middle; text-align:right">
-                            <a class="btn btn-xs btn-primary" href="~/product/attribute/edit/111/222">
+                            <a class="btn btn-xs btn-primary" href="~/product/attribute/edit/@Model.ProductID/@item.AttributeID">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a class="btn btn-xs btn-danger" href="~/product/attribute/delete/111/222" onclick="return confirm('Xóa thuộc tính này của mặt hàng?')">
+                            <a class="btn btn-xs btn-danger" href="~/product/attribute/delete/@Model.ProductID/@item.AttributeID" onclick="return confirm('Xóa thuộc tính này của mặt hàng?')">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </td>

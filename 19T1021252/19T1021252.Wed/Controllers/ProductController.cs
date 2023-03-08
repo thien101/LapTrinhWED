@@ -71,12 +71,21 @@ namespace _19T1021252.Wed.Controllers
         /// Tạo mặt hàng mới
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create(Product data)
+        public ActionResult Create(Product data, HttpPostedFileBase uploadPhoto)
         {
             if(Request.HttpMethod == "GET")
             {
                 ViewBag.Title = "Bổ sung khách hàng";
-                return View();
+                return View(data);
+            }
+
+            if (uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
+                string path = Server.MapPath("~/Images/Products");
+                string filePath = System.IO.Path.Combine(path, fileName);
+                uploadPhoto.SaveAs(filePath);
+                data.Photo = $"Images/Products/{fileName}";
             }
 
             int result = ProductDataService.AddProduct(data);
@@ -149,7 +158,16 @@ namespace _19T1021252.Wed.Controllers
         /// <returns></returns>        
         public ActionResult Delete(int id = 0)
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+            {
+                ProductDataService.DeleteProduct(id);
+                return RedirectToAction("Index");
+            }
+            var data = ProductDataService.GetProduct(id);
+            if(data == null)
+                return RedirectToAction("Index");
+
+            return View(data);
         }
 
         /// <summary>
@@ -162,21 +180,66 @@ namespace _19T1021252.Wed.Controllers
         [Route("photo/{method?}/{productID?}/{photoID?}")]
         public ActionResult Photo(string method = "add", int productID = 0, long photoID = 0)
         {
+
+            var data = new ProductPhoto()
+            {
+                PhotoID = 0,
+                ProductID = productID,
+            };
+
+            if (photoID > 0)
+            {
+                data = ProductDataService.GetPhoto(photoID);
+            }
+
             switch (method)
             {
                 case "add":
                     ViewBag.Title = "Bổ sung ảnh";
-                    return View();
+                    return View(data);
                 case "edit":
                     ViewBag.Title = "Thay đổi ảnh";
-                    return View();
+                    return View(data);
                 case "delete":
                     //ProductDataService.DeletePhoto(photoID);
+                    ProductDataService.DeletePhoto(photoID);
                     return RedirectToAction($"Edit/{productID}"); //return RedirectToAction("Edit", new { productID = productID });
                 default:
                     return RedirectToAction("Index");
             }
         }
+
+        /// <summary>
+        /// Thực hiện Cập nhập hay thêm Photo
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="uploadPhoto"></param>
+        /// <returns></returns>
+        [ValidateAntiForgeryToken] //Xac dinh nguon data co tu form cua minh hay tu ngoai vao
+        public ActionResult SavePhoto(ProductPhoto data, HttpPostedFileBase uploadPhoto)
+        {
+            if (uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
+                string path = Server.MapPath("~/Images/Products");
+                string filePath = System.IO.Path.Combine(path, fileName);
+                uploadPhoto.SaveAs(filePath);
+                data.Photo = $"Images/Products/{fileName}";
+            }
+
+
+            if (data.PhotoID == 0)
+            {
+                ProductDataService.AddPhoto(data);
+            }
+            else
+            {
+                ProductDataService.UpdatePhoto(data);
+            }
+
+            return RedirectToAction($"Edit/{data.ProductID}");
+        }
+
 
         /// <summary>
         /// Các chức năng quản lý thuộc tính của mặt hàng
@@ -188,20 +251,43 @@ namespace _19T1021252.Wed.Controllers
         [Route("attribute/{method?}/{productID}/{attributeID?}")]
         public ActionResult Attribute(string method = "add", int productID = 0, long attributeID = 0)
         {
+            var data = new ProductAttribute();
             switch (method)
             {
                 case "add":
+                    data = new ProductAttribute()
+                    {
+                        AttributeID = 0,
+                        ProductID = productID,
+                    };
                     ViewBag.Title = "Bổ sung thuộc tính";
-                    return View();
+                    return View(data);
                 case "edit":
+                    data = ProductDataService.GetAttribute(attributeID);
                     ViewBag.Title = "Thay đổi thuộc tính";
-                    return View();
+                    return View(data);
                 case "delete":
                     //ProductDataService.DeleteAttribute(attributeID);
+                    ProductDataService.DeleteAttribute(attributeID);
                     return RedirectToAction($"Edit/{productID}"); //return RedirectToAction("Edit", new { productID = productID });
                 default:
                     return RedirectToAction("Index");
             }
+        }
+
+        [ValidateAntiForgeryToken] //Xac dinh nguon data co tu form cua minh hay tu ngoai vao
+        public ActionResult SaveAttibute(ProductAttribute data)
+        {
+            if (data.AttributeID == 0)
+            {
+                ProductDataService.AddAttribute(data);
+            }
+            else
+            {
+                ProductDataService.UpdateAttribute(data);
+            }
+
+            return RedirectToAction($"Edit/{data.ProductID}");
         }
     }
 }

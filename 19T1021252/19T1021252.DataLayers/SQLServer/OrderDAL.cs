@@ -138,7 +138,7 @@ namespace _19T1021252.DataLayers.SQLServer
                                             LEFT JOIN Customers AS c ON o.CustomerID = c.CustomerID
                                             LEFT JOIN Employees AS e ON o.EmployeeID = e.EmployeeID
                                             LEFT JOIN Shippers AS s ON o.ShipperID = s.ShipperID
-                                    WHERE   (@Status = -99 OR o.Status = @Status)
+                                    WHERE   (@Status = 0 OR o.Status = @Status)
                                         AND (@SearchValue = N'' OR c.CustomerName LIKE @SearchValue OR s.ShipperName LIKE @SearchValue)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@Status", status);

@@ -1,4 +1,4 @@
-﻿
+﻿@model _19T1021252.DomainModels.Order
 @{
     ViewBag.Title = "Quản lý đơn hàng";
 }
@@ -31,64 +31,64 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Mã đơn hàng:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">1001</p>
+                <p class="form-control-static">@Model.OrderID</p>
             </div>
             <label class="control-label col-sm-2">Ngày lập đơn hàng:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">20/12/2022 15:00</p>
+                <p class="form-control-static">@Model.OrderTime</p>
             </div>
             <label class="control-label col-sm-2">Nhân viên phụ trách:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">Trần Nguyên Phong</p>
+                <p class="form-control-static">@Model.EmployeeFullName</p>
             </div>
             <label class="control-label col-sm-2">Ngày nhận đơn hàng:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">20/1/2022 17:00</p>
+                <p class="form-control-static">@Model.AcceptTime</p>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2">Khách hàng:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">Trần Lê Thanh Hoàng</p>
+                <p class="form-control-static">@Model.CustomerName</p>
             </div>
             <label class="control-label col-sm-2">Tên giao dịch:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">Ông Hoàng</p>
+                <p class="form-control-static">@Model.CustomerContactName</p>
             </div>
             <label class="control-label col-sm-2">Địa chỉ:</label>
             <div class="col-sm-10">
-                <p class="form-control-static">77 Nguyễn Huệ, thành phố Huế</p>
+                <p class="form-control-static">@Model.CustomerAddress</p>
             </div>            
             <label class="control-label col-sm-2">Email:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">hoang.lethanh@gmail.com</p>
+                <p class="form-control-static">@Model.CustomerEmail</p>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2">Người giao hàng:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">Vũ Hoàng Tuấn Minh</p>
+                <p class="form-control-static">@Model.ShipperName</p>
             </div>
             <label class="control-label col-sm-2">Điện thoại:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">0985666721</p>
+                <p class="form-control-static">@Model.ShipperPhone</p>
             </div>
             <label class="control-label col-sm-2">Nhận giao hàng lúc:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">22/12/2022 11:30</p>
+                <p class="form-control-static">@Model.ShippedTime</p>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2">Trạng thái đơn hàng:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">Đã hoàn tất</p>
+                <p class="form-control-static">@Model.StatusDescription</p>
             </div>
             <label class="control-label col-sm-2">Thời điểm hoàn tất:</label>
             <div class="col-sm-4">
-                <p class="form-control-static">22/12/2022 17:00</p>
+                <p class="form-control-static">@Model.FinishedTime</p>
             </div>
         </div>
     </div>

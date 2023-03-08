@@ -87,7 +87,7 @@ namespace _19T1021252.Wed.Controllers
                 SupplierId = 0
             };
             ViewBag.Title = "Bổ sung nhà cung cấp";
-            return View("Edit", data);
+            return View("Edit", data);  
         }   
 
         /// <summary>

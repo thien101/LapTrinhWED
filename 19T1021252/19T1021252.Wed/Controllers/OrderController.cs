@@ -16,7 +16,8 @@ namespace _19T1021252.Wed.Controllers
     {
         private const string SHOPPING_CART = "ShoppingCart";
         private const string ERROR_MESSAGE = "ErrorMessage";
-        private const int PAGE_SIZE = 4;
+        private const string ORDEL_SEARCH = "OrdelCondition";
+        private const int PAGE_SIZE = 15;
 
         /// <summary>
         /// Tìm kiếm, phân trang
@@ -25,9 +26,47 @@ namespace _19T1021252.Wed.Controllers
         public ActionResult Index()
         {
             //TODO: Code chức năng tìm kiếm, phân trang cho đơn hàng
+            
+            Models.OrderSearchInput condition = Session[ORDEL_SEARCH] as Models.OrderSearchInput;
+            if(condition == null)
+            {
+                condition = new Models.OrderSearchInput()
+                {
+                    Page = 1,
+                    PageSize = PAGE_SIZE,
+                    SearchValue = "",
+                    Status = 0,
+                };
+            }
 
-            return View();
+            return View(condition);
         }
+
+        public ActionResult Search(Models.OrderSearchInput condition)//int Page. int PageSize, string searchvalue
+        {
+            int rowCount = 0;
+            var data = OrderService.ListOrders(condition.Page,
+                                                        condition.PageSize,
+                                                        condition.Status,
+                                                        condition.SearchValue,
+                                                        out rowCount);
+
+            Models.OrderSearchOutput resutl = new Models.OrderSearchOutput()
+            {
+                Page = condition.Page,
+                PageSize = condition.PageSize,
+                Status = condition.Status,
+                SearchValue = condition.SearchValue,
+                RowCount = rowCount,
+                Data = data
+            };
+
+            Session[ORDEL_SEARCH] = condition;
+
+            return View(resutl);
+        }
+
+
         /// <summary>
         /// Xem thông tin và chi tiết của đơn hàng
         /// </summary>
@@ -35,9 +74,13 @@ namespace _19T1021252.Wed.Controllers
         /// <returns></returns>
         public ActionResult Details(int id = 0)
         {
-            //TODO: Code chức năng lấy và hiển thị thông tin của đơn hàng và chi tiết của đơn hàng
+            if (id <= 0)
+                return RedirectToAction("Index");
+            var data = OrderService.GetOrder(id);
+            if(data == null)
+                return RedirectToAction("Index");
 
-            return View();
+            return View(data);
         }
         /// <summary>
         /// Giao diện Thay đổi thông tin chi tiết đơn hàng
