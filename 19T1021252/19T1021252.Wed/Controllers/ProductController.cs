@@ -75,8 +75,23 @@ namespace _19T1021252.Wed.Controllers
         {
             if(Request.HttpMethod == "GET")
             {
-                ViewBag.Title = "Bổ sung khách hàng";
+                ViewBag.Title = "Bổ sung mặt hàng";
                 return View(data);
+            }
+
+            if (string.IsNullOrWhiteSpace(data.ProductName))
+                ModelState.AddModelError(nameof(data.ProductName), "Tên sản phẩm để rỗng");
+            if (string.IsNullOrWhiteSpace(data.Unit))
+                ModelState.AddModelError(nameof(data.Unit), "Đơn vị tính không được để trống");
+            if (data.Price == 0)
+                ModelState.AddModelError(nameof(data.Price), "Giá hàng phải lớn hơn 0");
+
+            data.Photo = "";
+
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.Title = "Bổ sung mặt hàng";
+                return View("Create", data);
             }
 
             if (uploadPhoto != null)
@@ -89,12 +104,6 @@ namespace _19T1021252.Wed.Controllers
             }
 
             int result = ProductDataService.AddProduct(data);
-
-            if(result == 0)
-            {
-                ModelState.AddModelError("", "Vui lòng điền đây đủ dữ liệu");
-                return View();
-            }
             
             return RedirectToAction("Index");
         }
@@ -137,7 +146,39 @@ namespace _19T1021252.Wed.Controllers
         [HttpPost]
         public ActionResult Save(Product data, HttpPostedFileBase uploadPhoto)
         {
-            if(uploadPhoto != null)
+            Models.ProductEditModel result;
+            if (string.IsNullOrWhiteSpace(data.ProductName))
+                ModelState.AddModelError(nameof(data.ProductName), "Tên sản phẩm để rỗng");
+            if (string.IsNullOrWhiteSpace(data.Unit))
+                ModelState.AddModelError(nameof(data.Unit), "Đơn vị tính không được để trống");
+            if (data.Price == 0)
+                ModelState.AddModelError(nameof(data.Price), "Giá hàng phải lớn hơn 0");
+
+
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.Title = "Bổ sung mặt hàng";
+
+                var dataPhotos = ProductDataService.ListPhotos(data.ProductID);
+                var dataAttribute = ProductDataService.ListAttributes(data.ProductID);
+
+                result = new Models.ProductEditModel()
+                {
+                    ProductID = data.ProductID,
+                    ProductName = data.ProductName,
+                    SupplierID = data.SupplierID,
+                    CategoryID = data.CategoryID,
+                    Unit = data.Unit,
+                    Price = data.Price,
+                    Photo = data.Photo,
+                    ListOfAttributes = dataAttribute,
+                    ListOfPhoto = dataPhotos,
+                };
+
+                return View("Edit", result);
+            }
+
+            if (uploadPhoto != null)
             {
                 string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
                 string path = Server.MapPath("~/Images/Products");
@@ -146,7 +187,7 @@ namespace _19T1021252.Wed.Controllers
                 data.Photo = $"Images/Products/{fileName}";
             }
 
-            bool result = ProductDataService.UpdateProduct(data);
+            ProductDataService.UpdateProduct(data);
 
             return RedirectToAction("Index");
         }

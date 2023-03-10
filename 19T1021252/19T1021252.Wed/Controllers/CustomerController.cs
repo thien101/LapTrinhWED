@@ -113,7 +113,27 @@ namespace _19T1021252.Wed.Controllers
         [HttpPost]
         public ActionResult Save(Customer data)
         {
-            if(data.CustomerID == 0)
+
+            if (string.IsNullOrWhiteSpace(data.CustomerName))
+                ModelState.AddModelError(nameof(data.CustomerName), "Tên khách hàng không được để trống");
+            if (string.IsNullOrWhiteSpace(data.ContactName))
+                ModelState.AddModelError(nameof(data.ContactName), "Tên khách hàng không được tên liên lạc");
+            if (string.IsNullOrWhiteSpace(data.Address))
+                ModelState.AddModelError(nameof(data.Address), "Không được để trống địa chỉ ");
+            if (string.IsNullOrWhiteSpace(data.Email))
+                ModelState.AddModelError(nameof(data.Email), "Không được để trống Email ");
+            if (string.IsNullOrWhiteSpace(data.Country))
+                ModelState.AddModelError(nameof(data.Country), "Không được để trống Quốc Gia ");
+            if (string.IsNullOrWhiteSpace(data.PostalCode))
+                ModelState.AddModelError(nameof(data.PostalCode), "Không được để trống mã bưu điện");
+
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.Title = data.CustomerID == 0 ? "Bổ sung người giao hàng" : "Chỉnh sửa người giao hàng";
+                return View("Edit", data);
+            }
+
+            if (data.CustomerID == 0)
             {
                 CommonDataService.AddCustomer(data);
             }
