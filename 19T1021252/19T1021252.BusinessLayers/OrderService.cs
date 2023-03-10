@@ -120,6 +120,9 @@ namespace _19T1021252.BusinessLayers
             //TODO: Kiểm tra xem việc chấp nhận đơn hàng có hợp lý đối với trạng thái hiện tại của đơn hàng hay không?
             //... Your code here ...
 
+            if (data.Status >= 2)
+                return false;
+
             data.Status = OrderStatus.ACCEPTED;
             data.AcceptTime = DateTime.Now;
             return orderDB.Update(data);            
@@ -138,6 +141,8 @@ namespace _19T1021252.BusinessLayers
 
             //TODO: Kiểm tra xem việc xác nhận đã chuyển hàng có hợp lý đối với trạng thái hiện tại của đơn hàng hay không?
             //... Your code here ...
+            if (data.Status > 2 || data.Status >= 3)
+                return false;
 
             data.Status = OrderStatus.SHIPPING;
             data.ShipperID = shipperID;
@@ -157,6 +162,8 @@ namespace _19T1021252.BusinessLayers
 
             //TODO: Kiểm tra xem việc ghi nhận đơn hàng kết thúc thành công có hợp lý đối với trạng thái hiện tại của đơn hàng hay không?
             //... Your code here ...
+            if (data.Status > 3 || data.Status >= 4)
+                return false;
 
             data.Status = OrderStatus.FINISHED;
             data.FinishedTime = DateTime.Now;

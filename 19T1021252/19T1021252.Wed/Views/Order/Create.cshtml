@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LiteCommerce.DomainModel.OrderDetail>
+﻿@model IEnumerable<_19T1021252.DomainModels.OrderDetail>
 @{
     ViewBag.Title = "Lập đơn hàng";
     int stt = 0;
@@ -101,7 +101,7 @@
                         <label>Khách hàng:</label>
                         <select class="form-control" name="customerID">
                             <option value="0">-- Chọn khách hàng --</option>
-                            @foreach (var item in LiteCommerce.BusinessLayer.CommonDataService.ListOfCustomers())
+                            @foreach (var item in _19T1021252.BusinessLayers.CommonDataService.ListOfCustomers())
                             {
                                 <option value="@item.CustomerID">@item.CustomerName</option>
                             }
@@ -111,7 +111,7 @@
                         <label>Nhân viên phụ trách:</label>
                         <select class="form-control" name="employeeID">
                             <option value="0">-- Chọn nhân viên --</option>
-                            @foreach (var item in LiteCommerce.BusinessLayer.CommonDataService.ListOfEmployees())
+                            @foreach (var item in _19T1021252.BusinessLayers.CommonDataService.ListOfEmployees())
                             {
                                 <option value="@item.EmployeeID">@item.FirstName @item.LastName</option>
                             }

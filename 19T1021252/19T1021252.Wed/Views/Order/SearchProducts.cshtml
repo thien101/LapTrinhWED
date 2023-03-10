@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LiteCommerce.DomainModel.Product>
+﻿@model IEnumerable<_19T1021252.DomainModels.Product>
 @{
     Layout = null;
     int page = ViewBag.Page;
@@ -9,6 +9,8 @@
 <div>
     @foreach (var item in Model)
     {
+        string img = (item.Photo.Contains("http")) ? "" : "/";
+        img += item.Photo;
         <form action="AddToCart" method="post" style="background-color:#fff; border:1px solid #ccc; margin:5px 0px 5px 0px; padding:5px;">
             <input type="hidden" name="ProductID" value="@item.ProductID" />
             <input type="hidden" name="ProductName" value="@item.ProductName" />
@@ -22,7 +24,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-3">
-                    <img class="img img-responsive img-bordered" src="~/Images/Products/@item.Photo">
+                    <img class="img img-responsive img-bordered" src="@img">
                 </div>
                 <div class="col-sm-9">
                     <div class="form-group-sm">

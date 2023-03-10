@@ -15,7 +15,7 @@ namespace _19T1021252.Wed.Controllers
     public class ProductController : Controller
     {
 
-        private const int PAGE_SIZE = 5;
+        private const int PAGE_SIZE = 10;
         private const string PRODUCT_SEARCH = "ProductCondition";
         
         /// <summary>

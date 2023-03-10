@@ -129,6 +129,7 @@ namespace _19T1021252.DataLayers.SQLServer
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"DELETE FROM ProductPhotos WHERE ProductID = @ProductID
                                     DELETE FROM ProductAttributes WHERE ProductID = @ProductID
+                                    DELETE FROM OrderDetails WHERE ProductID = @ProductID
                                     DELETE FROM Products WHERE ProductID = @ProductID";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
